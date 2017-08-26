@@ -44,6 +44,7 @@ public class GameView extends SurfaceView implements Runnable{
     private int ballCols = 3;
 
     private Context context;
+    private int screenY;
     // Adding start
 //    private ArrayList<Star> stars = new ArrayList<Star>();
 
@@ -51,6 +52,7 @@ public class GameView extends SurfaceView implements Runnable{
         super(context);
 
         this.context = context;
+        this.screenY = screenY;
 
         //init player object
         player = new Player(context);
@@ -98,9 +100,9 @@ public class GameView extends SurfaceView implements Runnable{
     }
 
     private void update() {
-        for (int i=0; i<ballFrameCount; i++) {
-            ballFrames[i].update();
-        }
+//        for (int i=0; i<ballFrameCount; i++) {
+//            ballFrames[i].update();
+//        }
 //        // Update the stars
 //        for (Star s : stars) {
 //            s.update(player.getSpeed());
@@ -108,28 +110,39 @@ public class GameView extends SurfaceView implements Runnable{
 
         // Update enemies
         for (int i=0; i<ballRows; i++) {
-            for (int j=0; j<ballCols; j++) {
-                balls[i][j].update(player.getSpeed());
+//            for (int j=0; j<ballCols; j++) {
+            balls[i][0].update(player.getSpeed());
+            balls[i][1].update(player.getSpeed());
+            balls[i][2].update(player.getSpeed());
 
-                // If collision occurs with Ballframe
-                if (Rect.intersects(ballFrames[i].getDetectCollision(), balls[i][j].getDetectCollision())) {
+            // If collision occurs with Ballframe
+            if (Rect.intersects(ballFrames[0].getDetectCollision(), balls[i][0].getDetectCollision())) {
 
-                    Log.d("xx", "collision encountered");
-                    if (ballFrames[i].getBallFrameID() == balls[i][j].getBallFrameID()) {
-                        // Increase the score
-                    }
-                    else {
-                        // Game over
-                        context.startActivity(new Intent(context.getApplicationContext(), GameOver.class));
-                    }
+                Log.d("xx", "collision encountered");
+                if ((ballFrames[0].getBallFrameID() == balls[i][0].getBallFrameID()) &
+                        (ballFrames[1].getBallFrameID() == balls[i][1].getBallFrameID()) &
+                        (ballFrames[2].getBallFrameID() == balls[i][2].getBallFrameID()) ){
+                    balls[i][0].resetBall(-screenY/3);
+                    balls[i][1].resetBall(-screenY/3);
+                    balls[i][2].resetBall(-screenY/3);
+                    player.overlapSuccess();
+                    player.setScore(4);
+                }
+                else {
+                    // Game over
+                    player.overlapFailure();
+                    Intent intent = new Intent(context.getApplicationContext(), MainActivity.class);
+                    intent.putExtra("PLAYER_SCORE", Integer.toString(player.getScore()));
+                    context.startActivity(intent);
+                }
 
 //                Log
 //                boom.setX(enemies[i].getX());
 //                boom.setY(enemies[i].getY());
 
 //                enemies[i].setX(-400);
-                }
             }
+//            }
 
 
 

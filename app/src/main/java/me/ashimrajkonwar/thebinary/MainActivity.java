@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import static me.ashimrajkonwar.thebinary.R.id.buttonPlay;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton buttonPlay;
+    private String playerScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonPlay = (ImageButton) findViewById(R.id.buttonPlay);
 
         buttonPlay.setOnClickListener(this);
+        playerScore = getIntent().getStringExtra("PLAYER_SCORE");
+        if (!(playerScore==null)) {
+            TextView textView = (TextView) findViewById(R.id.score);
+            textView.setText("Score: " + playerScore);
+        }
     }
 
     @Override

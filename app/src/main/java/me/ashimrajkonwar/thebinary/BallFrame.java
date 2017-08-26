@@ -52,7 +52,7 @@ public class BallFrame {
         ballFrameID = "zero";
 
         // get bitmap from drawable resources
-        Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball_zero);
+        Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.selector_zero);
 //        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball_one);
         bitmap = Bitmap.createScaledBitmap(b, 150, 150, false);
 
@@ -69,6 +69,11 @@ public class BallFrame {
         bitmapHeight = bitmap.getHeight();
 
         detectCollision = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
+
+        detectCollision.left = x;
+        detectCollision.top = y;
+        detectCollision.right = x + bitmap.getWidth();
+        detectCollision.bottom = y + bitmap.getHeight();
     }
 
     public void setBoosting() {
@@ -116,15 +121,16 @@ public class BallFrame {
 //        x++;
 
 
-        detectCollision.left = x;
-        detectCollision.top = y;
-        detectCollision.right = x + bitmap.getWidth();
-        detectCollision.bottom = y + bitmap.getHeight();
+
     }
 
 
     public Rect getDetectCollision() {
         return detectCollision;
+    }
+
+    public void setDetectCollision() {
+        this.detectCollision = null;
     }
 
     public Bitmap getBitmap() {
@@ -158,12 +164,12 @@ public class BallFrame {
 
     public void toggleBitmap() {
         if (ballFrameID == "zero") {
-            Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball_one);
+            Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.selector_one);
             bitmap = Bitmap.createScaledBitmap(b, 150, 150, false);
             ballFrameID = "one";
         }
         else {
-            Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball_zero);
+            Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.selector_zero);
             bitmap = Bitmap.createScaledBitmap(b, 150, 150, false);
             ballFrameID = "zero";
         }

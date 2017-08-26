@@ -20,7 +20,7 @@ public class Ball {
     private int y;
 
     // enemy speed
-    private int speed = 1;
+    private int speed = 3;
 
     private int maxX;
     private int minX;
@@ -71,23 +71,23 @@ public class Ball {
         y += playerSpeed;
         y += speed;
 
-        if (y > maxY + bitmap.getHeight()) {
-            Random generator = new Random();
-            int randBmp = generator.nextInt(2);
-//        Log.d("rand", Integer.toString(randBmp));
-            if (randBmp == 1) {
-                Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball_one);
-                bitmap = Bitmap.createScaledBitmap(b, 150, 150, false);
-                ballFrameID = "one";
-            } else {
-                Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball_zero);
-                bitmap = Bitmap.createScaledBitmap(b, 150, 150, false);
-                ballFrameID = "zero";
-            }
-            speed = 10;
-//            x = ;
-            y = minY;
-        }
+//        if (y > maxY + bitmap.getHeight()) {
+//            Random generator = new Random();
+//            int randBmp = generator.nextInt(2);
+//            Log.d("rand", Integer.toString(randBmp));
+//            if (randBmp == 1) {
+//                Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball_one);
+//                bitmap = Bitmap.createScaledBitmap(b, 150, 150, false);
+//                ballFrameID = "one";
+//            } else {
+//                Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball_zero);
+//                bitmap = Bitmap.createScaledBitmap(b, 150, 150, false);
+//                ballFrameID = "zero";
+//            }
+//            speed = 10;
+////            x = ;
+//            y = minY;
+//        }
 
         // Adding the top,left, bottom and right to the rect object
         detectCollision.left = x;
@@ -96,9 +96,31 @@ public class Ball {
         detectCollision.bottom = y + bitmap.getHeight();
     }
 
+    public void resetBall(int posY) {
+        setY(posY);
+        Random generator = new Random();
+        int randBmp = generator.nextInt(2);
+//        Log.d("rand", Integer.toString(randBmp));
+        if (randBmp == 1) {
+            Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball_one);
+            bitmap = Bitmap.createScaledBitmap(b, 150, 150, false);
+            ballFrameID = "one";
+        } else {
+            Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball_zero);
+            bitmap = Bitmap.createScaledBitmap(b, 150, 150, false);
+            ballFrameID = "zero";
+        }
+
+
+    }
+
     // Adding a setter to X - coordinate to change it after collision
     public void setX(int x) {
         this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     //getter to get collision object

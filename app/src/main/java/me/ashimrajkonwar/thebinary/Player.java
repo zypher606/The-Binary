@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 
 /**
  * Created by cypher606 on 20/7/17.
@@ -38,6 +39,11 @@ public class Player {
 
     private Rect detectCollision;
 
+    private MediaPlayer mediaPlayerSuccess;
+    private MediaPlayer mediaPlayerFailure;
+    private Context context;
+    private int score = 0;
+
     // construct player
     public Player(Context context) {
         x = 75;
@@ -55,6 +61,10 @@ public class Player {
 
         // setting the boosting value to false initially
         boosting = false;
+
+        this.context = context;
+        mediaPlayerSuccess = MediaPlayer.create(context, R.raw.collected);
+        mediaPlayerFailure = MediaPlayer.create(context, R.raw.gameover);
 
 //        detectCollision = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
@@ -130,5 +140,23 @@ public class Player {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public void overlapSuccess() {
+//        mediaPlayerSuccess = MediaPlayer.create(context, R.raw.collected);
+        mediaPlayerSuccess.start();
+    }
+
+    public void overlapFailure() {
+//        mediaPlayer = MediaPlayer.create(context, R.raw.gameover);
+        mediaPlayerFailure.start();
+    }
+
+    public void setScore(int score) {
+        this.score += score;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
